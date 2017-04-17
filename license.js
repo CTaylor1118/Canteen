@@ -1,8 +1,8 @@
 /**
- * Canteen v@@VERSION
- * @@DATE
- *
- * Copyright @@YEAR Platfora, Inc.
+ * Canteen v<%= pkg.version %>
+ * <%= grunt.template.today("mmmm dS, yyyy") %>
+ * Modifications Copyright <%= grunt.template.today("yyyy") %> Christoper Taylor
+ * Original Copyright 2015 Platfora, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
