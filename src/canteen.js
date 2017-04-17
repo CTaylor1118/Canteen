@@ -255,7 +255,8 @@
 
     HTMLCanvasElement.prototype.getContext = function() {
       var context = origGetContext.apply(this, arguments);
-
+      if(arguments[0] !== '2D')
+        return context
       // if the context already has a canteen instance, then return it
       if (context.canteen) {
         return context.canteen
