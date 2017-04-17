@@ -1,4 +1,17 @@
-(function() {
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(['spark-md5'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        // Node. Does not work with strict CommonJS, but
+        // only CommonJS-like environments that support module.exports,
+        // like Node.
+        module.exports = factory(require('spark-md5'));
+    } else {
+        // Browser globals (root is window)
+        root.returnExports = factory(root['spark-md5']);
+    }
+}(this, function(md5) {
   // ================================ Constants ================================
   var CONTEXT_2D_ATTRIBUTES = [
     'fillStyle',
@@ -157,7 +170,7 @@
      * @returns {String}
      */  
     hash: function(config) {
-      return Canteen.md5(this.json(config));
+      return md5.hash(this.json(config));
     },
     /**
      * clear the stack
@@ -255,7 +268,7 @@
 
     HTMLCanvasElement.prototype.getContext = function() {
       var context = origGetContext.apply(this, arguments);
-      if(arguments[0] !== '2D')
+      if(arguments[0].toLowerCase() !== '2d')
         return context
       // if the context already has a canteen instance, then return it
       if (context.canteen) {
@@ -273,4 +286,4 @@
   // make the Canteen namespace global so that developers can configure
   // it via Canteen.globals, or override methods if desired
   window.Canteen = Canteen;
-})();
+}));
