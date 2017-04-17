@@ -1,27 +1,15 @@
 module.exports = function(grunt) {
-  var files = [
-    'src/canteen.js',
-    'lib/md5.js'
-  ];
 
   // Project configuration.
   var config = {
     pkg: grunt.file.readJSON('package.json'),
-    concat: {
+    browserify: {
       options: {
-        separator: ';'
+        banner: grunt.file.read('license.js')
       },
-      dev: {
-        src: files,
+      prod: {
+        src: ['src/**'],
         dest: 'build/canteen.js'
-      },
-      devLicense: {
-        src: ['license.js', 'build/canteen.js'],
-        dest: 'build/canteen.js'
-      },
-      prodLicense: {
-        src: ['license.js', 'build/canteen.min.js'],
-        dest: 'build/canteen.min.js'
       }
     },
     uglify: {
@@ -41,26 +29,6 @@ module.exports = function(grunt) {
       },
       all: ['src/**/*.js']
     },
-    replace: {
-      all: {
-        options: {
-          variables: {
-            VERSION: '<%= pkg.version %>',
-            YEAR: '<%= grunt.template.today("yyyy") %>',
-            DATE: '<%= grunt.template.today("mmmm dS, yyyy") %>'
-          },
-          prefix: '@@'
-        },
-
-        files: [{
-          src: 'build/canteen.js',
-          dest: 'build/canteen.js'
-        }, {
-          src: 'build/canteen.min.js',
-          dest: 'build/canteen.min.js'
-        }]
-      }
-    },
     watch: {
       src: {
         files: ['src/**/*.js'],
@@ -75,14 +43,13 @@ module.exports = function(grunt) {
   grunt.initConfig(config);
 
   // Load plugins
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-replace');
+  grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Tasks
-  grunt.registerTask('build', ['clean:build', 'concat:dev', 'uglify:prod', 'concat:devLicense', 'concat:prodLicense', 'replace:all']);
+  grunt.registerTask('build', ['clean:build', 'browserify', 'uglify:prod']);
 
 };
