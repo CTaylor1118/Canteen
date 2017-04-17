@@ -14,7 +14,7 @@
     "node-static": "^0.7.5"
   },
   "readmeFilename": "README.md",
-  "main": "Gruntfile.js",
+  "main": "build/canteen.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/platfora/Canteen.git"
