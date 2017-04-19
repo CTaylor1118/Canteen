@@ -16,7 +16,7 @@
     "spark-md5": "^3.0.0"
   },
   "readmeFilename": "README.md",
-  "main": "build/canteen.js",
+  "main": "src/canteen.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/platfora/Canteen.git"
